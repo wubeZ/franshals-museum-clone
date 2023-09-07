@@ -13,7 +13,31 @@ const config: Config = {
         'gradient-conic':
           'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
       },
+      animation:{
+        'infinite-scroll': 'infinite-scroll 25s linear infinite',
+      },
+      keyframes:{
+        'infinite-scroll': {
+          from: { transform: 'translateX(0)' },
+          to: { transform: 'translateX(-1500px)' },
+        }
+      },
+      colors:{
+        primaryColor:{
+          100: '#efd76d',
+          200: '#fce372',
+          300: '#cca59a',
+      },
+      others: {
+        100: "#f37449",
+        200: "#a385bd",
+      },
     },
+    },
+    fontFamily: {
+      primaryFont: ['Twentieth Century', 'sans-serif'],
+      secondaryFont: ['Raisonne', 'sans-serif']
+    }
   },
   plugins: [],
 }
