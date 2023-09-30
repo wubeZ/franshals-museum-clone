@@ -3,7 +3,7 @@
 import Image from "next/image";
 import logo from "@/assets/images/frans_hals_museum_logo_before_after_a.png";
 import { IoTicketOutline } from "react-icons/io5";
-import {IoMdArrowDropdown} from "react-icons/io"
+import { IoMdArrowDropdown } from "react-icons/io";
 import {
   AiOutlineCalendar,
   AiOutlineClockCircle,
@@ -11,26 +11,34 @@ import {
 } from "react-icons/ai";
 import { CiLocationOn } from "react-icons/ci";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
+import { useClickOutside } from "../hooks/useClickOutside";
 
 const Header = () => {
-  const [openMenu, SetOpenMenu] = useState<boolean>(false);
+  const [openMenu, setOpenMenu] = useState<boolean>(false);
+
+  const wrapperRef = useRef(null);
+
+  useClickOutside(wrapperRef, () => {
+    setOpenMenu(false);
+  });
+
   return (
-    <div>
-      <div className="flex justify-between items-center px-7 pt-3 w-full bg-primaryColor-100 ">
-        <div className={`font-bold mr-32 rounded-2xl border-2 text-4xl ${openMenu ? "mt-6 w-32 h-32" : "w-20 h-12"} border-[#c2b370] transition-all ease-linear hover:border-slate-800`}>
+    <div className="bg-primaryColor-100">
+      <div className="flex justify-between items-center px-7 pt-3">
+        <div
+          className={`flex justify-center items-center font-bold rounded-2xl border-2 text-4xl ${
+            openMenu ? "mt-6 w-28 h-28" : "w-20 h-12"
+          } border-[#c2b370] transition-all ease-linear hover:border-slate-800`}
+        >
           {!openMenu && (
-            <button
-              onClick={() => SetOpenMenu(true)}
-              className="pl-8"
-            >
-             <IoMdArrowDropdown/>
+            <button onClick={() => setOpenMenu(true)} className="pl-6">
+              <IoMdArrowDropdown />
             </button>
           )}
           {openMenu && (
-            <div className="">
-              <button onMouseLeave={() => SetOpenMenu(false)} onClick={() => SetOpenMenu(false)} className="font-thin text-2xl px-2" >X</button>
-              <ul className="list-none text-sm font-semibold text-center">
+            <div className="" ref={wrapperRef}>
+              <ul className="flex flex-col justify-center items-center list-none text-sm font-semibold text-center">
                 <li>English</li>
                 <li>Netherland</li>
                 <li>Detuch</li>
@@ -39,28 +47,37 @@ const Header = () => {
             </div>
           )}
         </div>
-        <div className="">
-          <ul className="flex justify-between gap-16 list-none font-primaryFont items-center">
-            <li className="hidden lg:block">Visit</li>
-            <li className="hidden lg:block">Arts and News</li>
+        <p className="lg:hidden">
+          <Image
+            src={logo}
+            width={150}
+            height={100}
+            alt="logo"
+            className="overflow-hidden object-cover"
+          />
+        </p>
+        <div className="hidden lg:block">
+          <ul className="flex justify-end lg:justify-between gap-10 xl:gap-16 list-none font-primaryFont items-center mr-4">
+            <li className="">Visit</li>
+            <li className="text-center">Arts and News</li>
             <li className="">
               <Image
                 src={logo}
                 width={150}
                 height={100}
                 alt="logo"
-                className="overflow-hidden"
+                className="overflow-hidden object-cover"
               />
             </li>
-            <li className="hidden lg:block">ABOUT</li>
-            <li className="hidden lg:block">SUPPORT</li>
+            <li className="">ABOUT</li>
+            <li className="">SUPPORT</li>
           </ul>
         </div>
-        <div className="hidden rounded-full lg:flex bg-slate-900 gap-3 px-10 py-2">
+        <div className="hidden rounded-full lg:flex items-center bg-slate-900 gap-3 px-8 py-2">
           <div className="text-primaryColor-100 text-2xl font-extrabold">
             <IoTicketOutline />
           </div>
-          <div className="text-lg font-primaryFont font-bold text-primaryColor-100 ">
+          <div className="text-base xl:text-lg font-primaryFont font-bold text-primaryColor-100 ">
             Buy ticket
           </div>
         </div>
